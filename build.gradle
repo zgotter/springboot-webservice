@@ -30,6 +30,20 @@ repositories { /* 각종 의존성(라이브러리)들을 어떤 원격 저장�
 dependencies { /* 프로젝트 개발에 필요한 의존성들을 선언 */
     /* 아래에서 라이브러리 지정 시 버전을 명시하지 않아야 맨 위에 작성한 버전을 따라가게 됨 */
     compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.projectlombok:lombok') /* 롬복(Lombok) 의존성 추가 */
+    /* 롬복(Lombok) 의존성 추가 */
+    compile('org.projectlombok:lombok') 
+    /*
+        spring-boot-starter-data-jpa
+         - 스프링 부트용 Spring Data Jpa 추상화 라이브러리
+         - 스프링 부트 버전에 맞춰 자동으로 JPA 관련 라이브러리들의 버전을 관리
+     */
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    /*
+        h2
+         - 인메모리 관계형 데이터베이스
+         - 메모리에서 실행되기 떄문에 애플리케이션을 재시작할 때마다 초기화됨
+         - 이를 활용하여 테스트 용도로 많이 사용
+     */
+    compile('com.h2database:h2')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
