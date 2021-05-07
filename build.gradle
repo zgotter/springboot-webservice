@@ -30,5 +30,6 @@ repositories { /* 각종 의존성(라이브러리)들을 어떤 원격 저장�
 dependencies { /* 프로젝트 개발에 필요한 의존성들을 선언 */
     /* 아래에서 라이브러리 지정 시 버전을 명시하지 않아야 맨 위에 작성한 버전을 따라가게 됨 */
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.projectlombok:lombok') /* 롬복(Lombok) 의존성 추가 */
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
