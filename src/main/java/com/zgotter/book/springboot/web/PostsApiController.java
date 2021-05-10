@@ -1,11 +1,11 @@
 package com.zgotter.book.springboot.web;
 
 import com.zgotter.book.springboot.service.posts.PostsService;
+import com.zgotter.book.springboot.web.dto.PostsResponseDto;
 import com.zgotter.book.springboot.web.dto.PostsSaveRequestDto;
+import com.zgotter.book.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 // 보통 Controller와 Service에서 @Autowired를 통해 Bean을 주입 받는다.
 //  - 스프링에서 Bean을 주입 받는 방법 : @Autowired, setter, 생성자
@@ -20,9 +20,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostsApiController {
     private final PostsService postsService;
 
+    // 등록
     @PostMapping("/api/v1/posts")
     public Long save(@RequestBody PostsSaveRequestDto requestDto) {
         return postsService.save(requestDto);
+    }
+
+    // 수정
+    @PutMapping("/api/v1/posts/{id}")
+    public Long update(@PathVariable Long id, @RequestBody PostsUpdateRequestDto requestDto) {
+        return postsService.update(id, requestDto);
+    }
+
+    // 조회
+    @GetMapping("/api/vi/posts/{id}")
+    public PostsResponseDto findById(@PathVariable Long id) {
+        return postsService.findById(id);
     }
 
 }
