@@ -2,12 +2,16 @@ package com.zgotter.book.springboot.service.posts;
 
 import com.zgotter.book.springboot.domain.posts.Posts;
 import com.zgotter.book.springboot.domain.posts.PostsRepository;
+import com.zgotter.book.springboot.web.dto.PostsListResponseDto;
 import com.zgotter.book.springboot.web.dto.PostsResponseDto;
 import com.zgotter.book.springboot.web.dto.PostsSaveRequestDto;
 import com.zgotter.book.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 // 보통 Controller와 Service에서 @Autowired를 통해 Bean을 주입 받는다.
 //  - 스프링에서 Bean을 주입 받는 방법 : @Autowired, setter, 생성자
@@ -20,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class PostsService {
+
     private final PostsRepository postsRepository;
 
     @Transactional
@@ -49,5 +54,22 @@ public class PostsService {
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id="+id));
         return new PostsResponseDto(entity);
+    }
+
+    // @Transactional(readOnly = true)
+    //  - 트랜잭션 범위는 유지하되, 조회 기능만 남겨두어 조회 속도가 개선됨
+    //  - 등록, 수정, 삭제 기능이 전혀 없는 서비스 메소드에 사용하는 것을 추천
+    @Transactional(readOnly = true)
+    public List<PostsListResponseDto> findAllDesc() {
+        // .map(PostsListResponseDto::new)
+        //  - 실제로는 아래와 같다.
+        //   - .map(posts -> new PostsListResponseDto(posts))
+        //  - postsRepository 결과로 넘어온 Posts의 Stream을 map을 통해 PostsListResponseDto 변환
+        
+        // .collect(Collectors.toList())
+        //  - PostsListResponseDto 를 List로 반환
+        return postsRepository.findAllDesc().stream()
+                .map(PostsListResponseDto::new) // == .map(posts -> new PostsListResponseDto(posts))
+                .collect(Collectors.toList());
     }
 }
