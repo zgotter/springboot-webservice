@@ -17,4 +17,10 @@ public class IndexController {
         return "index";
     }
 
+    // 등록 화면 이동
+    @GetMapping("/posts/save")
+    public String postsSave() {
+        return "posts-save";
+    }
+
 }
