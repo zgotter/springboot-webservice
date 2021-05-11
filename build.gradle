@@ -45,5 +45,7 @@ dependencies { /* 프로젝트 개발에 필요한 의존성들을 선언 */
          - 이를 활용하여 테스트 용도로 많이 사용
      */
     compile('com.h2database:h2')
+    /* 머스테치 스타터 의존성 추가 */
+    compile('org.springframework.boot:spring-boot-starter-mustache')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
