@@ -1,5 +1,6 @@
 package com.zgotter.book.springboot.domain.posts;
 
+import com.zgotter.book.springboot.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +34,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Posts {
+public class Posts extends BaseTimeEntity { // BaseTimeEntity 추상 클래스 상속
 
     // @Id
     //  - 해당 테이블의 PK 필드를 나타냄

@@ -2,6 +2,7 @@ package com.zgotter.book.springboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /*
 * - 프로젝트의 메인 클래스
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 * - 해당 클래스는 프로젝트의 최상단에 위치해야 한다.
 * */
 
+@EnableJpaAuditing // JPA Aduiting 활성화
 @SpringBootApplication // 스프링 부트의 자동 설정, 스프링 Bean 읽기와 생성 자동 설정
 public class Application {
     public static void main(String[] args) {
