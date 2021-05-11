@@ -1,10 +1,12 @@
 package com.zgotter.book.springboot.web;
 
 import com.zgotter.book.springboot.service.posts.PostsService;
+import com.zgotter.book.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RequiredArgsConstructor // final이 선언된 모든 필드를 인자값으로 하는 생성자를 생성 -> 생성자로 Bean 객체(PostsService)를 주입
 @Controller
@@ -18,6 +20,8 @@ public class IndexController {
     // 아래 메서드의 전체 경로 : src/main/resources/templates/index.mustache
     // 위 경로로 전환되어 View Resolver 가 처리하게 된다.
     //  - View Resolver : URL 요청의 결과를 전달할 타입과 값을 지정하는 관리자
+    
+    // 메인 페이지 이동
     @GetMapping("/")
     public String index(Model model) {
         // Model
@@ -31,6 +35,14 @@ public class IndexController {
     @GetMapping("/posts/save")
     public String postsSave() {
         return "posts-save";
+    }
+    
+    // 수정 화면 이동
+    @GetMapping("/posts/update/{id}")
+    public String postsUpdate(@PathVariable Long id, Model model) {
+        PostsResponseDto dto = postsService.findById(id);
+        model.addAttribute("post", dto);
+        return "posts-update";
     }
 
 }
