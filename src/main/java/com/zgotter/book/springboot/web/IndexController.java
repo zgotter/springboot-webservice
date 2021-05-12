@@ -1,5 +1,6 @@
 package com.zgotter.book.springboot.web;
 
+import com.zgotter.book.springboot.config.auth.LoginUser;
 import com.zgotter.book.springboot.config.auth.dto.SessionUser;
 import com.zgotter.book.springboot.service.posts.PostsService;
 import com.zgotter.book.springboot.web.dto.PostsResponseDto;
@@ -27,7 +28,7 @@ public class IndexController {
     
     // 메인 페이지 이동
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, @LoginUser SessionUser user) {
         // Model
         //  - 서버 템플릿 엔진에서 사용할 수 있는 객체를 저장할 수 있음
         //  - 여기서는 postsService.findAllDesc()로 가져온 결과를 posts로 index.mustache 에 전달
@@ -35,7 +36,7 @@ public class IndexController {
 
         // CustomOAuth2UserService에서 로그인 성공 시 세션에 SessionUser를 저장하도록 구성
         // 로그인 성공 시 HttpSession.getAttribute("user")에서 값을 가져올 수 있다.
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        //SessionUser user = (SessionUser) httpSession.getAttribute("user"); // "@LoginUser SessionUser user" 로 대체
 
         // 세션에 저장된 값이 있을 때만 model에 userName을 등록
         // 세션에 저장된 값이 없으면 model엔 아무런 값이 없는 상태이므로 로그인 버튼이 보이게 된다.
