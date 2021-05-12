@@ -54,5 +54,7 @@ dependencies { /* 프로젝트 개발에 필요한 의존성들을 선언 */
          - spring-security-oauth2-client와 spring-security-oauth2-jose를 기본으로 관리
      */
     compile('org.springframework.boot:spring-boot-starter-oauth2-client')
+    /* 데이터베이스 세션 저장소 설정 관련 의존성 추가 */
+    compile('org.springframework.session:spring-session-jdbc')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
