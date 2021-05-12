@@ -1,5 +1,6 @@
 package com.zgotter.book.springboot.web;
 
+import com.zgotter.book.springboot.config.auth.dto.SessionUser;
 import com.zgotter.book.springboot.service.posts.PostsService;
 import com.zgotter.book.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -8,11 +9,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpSession;
+
 @RequiredArgsConstructor // final이 선언된 모든 필드를 인자값으로 하는 생성자를 생성 -> 생성자로 Bean 객체(PostsService)를 주입
 @Controller
 public class IndexController {
 
     private final PostsService postsService;
+    private final HttpSession httpSession;
 
     // 머스테치 스타터 덕분에 컨트롤러에서 문자열을 반환할 때 "앞의 경로"와 "뒤의 파일 확장자"는 자동으로 지정된다.
     //  - 앞의 경로 : src/main/resources/templates
@@ -28,6 +32,16 @@ public class IndexController {
         //  - 서버 템플릿 엔진에서 사용할 수 있는 객체를 저장할 수 있음
         //  - 여기서는 postsService.findAllDesc()로 가져온 결과를 posts로 index.mustache 에 전달
         model.addAttribute("posts", postsService.findAllDesc());
+
+        // CustomOAuth2UserService에서 로그인 성공 시 세션에 SessionUser를 저장하도록 구성
+        // 로그인 성공 시 HttpSession.getAttribute("user")에서 값을 가져올 수 있다.
+        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+
+        // 세션에 저장된 값이 있을 때만 model에 userName을 등록
+        // 세션에 저장된 값이 없으면 model엔 아무런 값이 없는 상태이므로 로그인 버튼이 보이게 된다.
+        if (user != null) {
+            model.addAttribute("userName", user.getName());
+        }
         return "index";
     }
 
