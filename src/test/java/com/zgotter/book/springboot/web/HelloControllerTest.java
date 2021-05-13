@@ -1,9 +1,13 @@
 package com.zgotter.book.springboot.web;
 
+import com.zgotter.book.springboot.config.auth.SecurityConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -26,7 +30,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //   - @Component
 //   - @Repository
 //  - 여기서는 컨트롤러만 사용하기 때문에 선언한다.
-@WebMvcTest(controllers = HelloController.class)
+
+// 스프링 시큐리티 설정 시 @WebMvcTest에서 에러가 발생하는 이유
+//  - @WebMvcTest는 WebSecurityConfigurerAdapter, WebMvcConfigurer, @ControllerAdvice, @Controller를 읽는다.
+//  - 즉, @Repository, @Service, @Component 는 스캔 대상이 아니다.
+//  - 그러므로 SecurityConfig는 읽었지만, SecurityConfig를 생성하기 위해 필요한 CustomOAuth2UserService는 읽을 수가 없어
+//    에러가 발생한다.
+//  - 이 문제를 해결하기 위해 다음과 같이 스캔 대상에서 SecurityConfig를 제거한다.
+@WebMvcTest(controllers = HelloController.class,
+    excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
+    }
+)
 public class HelloControllerTest {
 
     // @Autowired
@@ -39,6 +54,7 @@ public class HelloControllerTest {
     private MockMvc mvc;
 
     @Test
+    @WithMockUser(roles="USER") // 가짜로 인증된 사용자 생성
     public void hello가_리턴된다() throws Exception {
         String hello = "hello";
 
@@ -64,6 +80,7 @@ public class HelloControllerTest {
     }
 
     @Test
+    @WithMockUser(roles="USER") // 가짜로 인증된 사용자 생성
     public void helloDto가_리턴된다() throws Exception {
         String name = "hello";
         int amount = 1000;

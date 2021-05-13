@@ -56,5 +56,11 @@ dependencies { /* 프로젝트 개발에 필요한 의존성들을 선언 */
     compile('org.springframework.boot:spring-boot-starter-oauth2-client')
     /* 데이터베이스 세션 저장소 설정 관련 의존성 추가 */
     compile('org.springframework.session:spring-session-jdbc')
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    /*
+        spring-security-test
+         - 스프링 시큐리티 테스트를 위한 여러 도구를 지원
+    */
+    testCompile('org.springframework.security:spring-security-test')
 }

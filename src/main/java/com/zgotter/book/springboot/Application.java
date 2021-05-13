@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 * - 해당 클래스는 프로젝트의 최상단에 위치해야 한다.
 * */
 
-@EnableJpaAuditing // JPA Aduiting 활성화
+//@EnableJpaAuditing // JPA Aduiting 활성화 -> 스프링 시큐리티 설정으로 인한 HelloControllerTest 관련 에러 발생으로 분리
 @SpringBootApplication // 스프링 부트의 자동 설정, 스프링 Bean 읽기와 생성 자동 설정
 public class Application {
     public static void main(String[] args) {
