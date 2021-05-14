@@ -45,6 +45,8 @@ dependencies { /* 프로젝트 개발에 필요한 의존성들을 선언 */
          - 이를 활용하여 테스트 용도로 많이 사용
      */
     compile('com.h2database:h2')
+    /* MariaDB 드라이버 등록 */
+    compile("org.mariadb.jdbc:mariadb-java-client")
     /* 머스테치 스타터 의존성 추가 */
     compile('org.springframework.boot:spring-boot-starter-mustache')
     /* 스프링 시큐리티 관련 의존성 추가 */
